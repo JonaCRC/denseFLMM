@@ -4,4 +4,4 @@ Estimation of functional linear mixed models for functional data sampled on equa
 
 
 # Installation
-To install the latest patched version directly from Github, please use devtools::install_github("denseFLMM").
+To install the latest patched version directly from Github, please use devtools::install_github("JonaCRC/denseFLMM").
