@@ -4,27 +4,27 @@
 #' sampled on equal grids based on functional principal component analysis 
 #' (FPCA). The implemented models are special cases of the general FLMM
 #' \deqn{
-#' Y_i(t_d) = \mu(t_d,\strong{x}_i) + \strong{z}_i^\top U(t_d) + \epsilon_i(t_d),  i = 1,
+#' Y_i(t_d) = \mu(t_d,x_i) + z_i^\top U(t_d) + \epsilon_i(t_d),  i = 1,
 #' \ldots,n, d = 1, \ldots, D,} 
 #' with \eqn{Y_i(t_d)} the value of the response of curve \eqn{i} at observation point
-#' \eqn{t_d}, \eqn{\mu(t_d,\strong{x_i})} is a mean function, which may depend on covariates
-#' \eqn{\strong{x}_i} and needs to be estimated beforehand. \eqn{\strong{z}_i} is a covariate
+#' \eqn{t_d}, \eqn{\mu(t_d,x_i)} is a mean function, which may depend on covariates
+#' \eqn{x_i} and needs to be estimated beforehand. \eqn{z_i} is a covariate
 #' vector, which is multiplied with the vector of functional random
-#' effects \eqn{\strong{U}(t_d)}. 
+#' effects \eqn{U(t_d)}. 
 #' Usually, the functional random effects will additionally include a smooth error term which 
 #' is a functional random intercept with a special structure that captures deviations 
 #' from the mean which are correlated along the support of the functions. 
-#' In this case, the last block of \eqn{\strong{z}_i} corresponds to an indicator vector of 
-#' indicators for each curve and the last block in \eqn{\strong{U}(t)} consists of curve-specific
+#' In this case, the last block of \eqn{z_i} corresponds to an indicator vector of 
+#' indicators for each curve and the last block in \eqn{U(t)} consists of curve-specific
 #' functional random effects.
 #' \eqn{\epsilon_i(t_d)} is independent and identically
 #' distributed white noise measurement error with homoscedastic,
 #' constant variance.\cr\cr
 #' The vector-valued functional random effects can be subdivided into \eqn{H} 
-#' independent blocks of functional random effects \deqn{\strong{U}(t_d) = (\strong{U}_1(t_d)^\top, \ldots,
-#' \strong{U}_H(t_d)^\top)^\top,} with \eqn{\strong{U}_g(t_d)} and \eqn{\strong{U}_h(t_d)} independent 
-#' for \eqn{g \neq h}. Each block \eqn{\strong{U}_h(t_d)} further contains \eqn{L^{U_h}} independent
-#' copies \eqn{\strong{U}_{gl}(t_d)}, \eqn{l=1, \ldots, L^{U_h}}, of a vector-valued stochastic process with
+#' independent blocks of functional random effects \deqn{U(t_d) = (U_1(t_d)^\top, \ldots,
+#' U_H(t_d)^\top)^\top,} with \eqn{\strong{U}_g(t_d)} and \eqn{\strong{U}_h(t_d)} independent 
+#' for \eqn{g \neq h}. Each block \eqn{U_h(t_d)} further contains \eqn{L^{U_h}} independent
+#' copies \eqn{U_{gl}(t_d)}, \eqn{l=1, \ldots, L^{U_h}}, of a vector-valued stochastic process with
 #' \eqn{\rho^{U_h}} vector components \eqn{U_{gls}(t_d)}, \eqn{s = 1,\ldots, \rho^{U_h}}. 
 #' The total number of functional random effects then amounts to \eqn{q = \sum_{h=1}^H L^{U_h}\rho^{U_h}}.
 #' \cr\cr
@@ -75,13 +75,13 @@
 #' based on function \code{\link{bam}} in \code{R}-package \code{\link{mgcv}}, respectively. 
 #' Defaults to \code{"gamm"}. 
 #' 
-#' @details The model fit for centered curves \eqn{Y_i(.)} is \deqn{\strong{Y} = \strong{ZU} + \strong{\epsilon},}
-#' with \eqn{\strong{Y} = [Y_i(t_d)]_{i = 1, \ldots, n, d = 1, \ldots, D}}, 
-#' \eqn{\strong{Z}} consisting of 
-#' \eqn{H} blocks \eqn{\strong{Z}^{U_h}} for \eqn{H} grouping factors, \eqn{\strong{Z} = [\strong{Z}^{U_1}|\ldots| \strong{Z}^{U_H}]}, 
-#' and each \eqn{\strong{Z}^{U_h} = [\strong{Z}_1^{U_h} |\ldots| \strong{Z}_{\rho^{U_h}}^{U_h}]}. \eqn{\strong{U}} is row-wise divided 
-#' into blocks \eqn{\strong{U}_1,\ldots, \strong{U}_H}, corresponding to \eqn{\strong{Z}}.\cr
-#' In case no group-specific functional random effects are specified, column \eqn{j} in \eqn{\strong{Z}_{s}^{U_g}}, \eqn{s=1,\ldots,\rho^{U_g}}, 
+#' @details The model fit for centered curves \eqn{Y_i(.)} is \deqn{Y = ZU + \epsilon,}
+#' with \eqn{Y = [Y_i(t_d)]_{i = 1, \ldots, n, d = 1, \ldots, D}}, 
+#' \eqn{Z} consisting of 
+#' \eqn{H} blocks \eqn{Z^{U_h}} for \eqn{H} grouping factors, \eqn{Z = [Z^{U_1}|\ldots| Z^{U_H}]}, 
+#' and each \eqn{Z^{U_h} = [Z_1^{U_h} |\ldots| Z_{\rho^{U_h}}^{U_h}]}. \eqn{U} is row-wise divided 
+#' into blocks \eqn{U_1,\ldots, U_H}, corresponding to \eqn{Z}.\cr
+#' In case no group-specific functional random effects are specified, column \eqn{j} in \eqn{Z_{s}^{U_g}}, \eqn{s=1,\ldots,\rho^{U_g}}, 
 #' is assumed to be equal to the \eqn{s}th variable (column) in \code{Zvars[[g]]} times an 
 #' indicator for the \eqn{j}th level of grouping factor \eqn{g}, \eqn{g=1,\ldots,G}. \cr
 #' Note that \eqn{G} here denotes the number of random grouping factors not used for the estimation 
