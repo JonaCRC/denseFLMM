@@ -125,7 +125,7 @@
 #' }
 #' @author Sonja Greven, Jona Cederbaum
 #'
-#' @keywords models, FPCA
+#' @keywords models FPCA
 #'
 #' @examples
 #' # fit model with group-specific functional random intercepts for two groups
