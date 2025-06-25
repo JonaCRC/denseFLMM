@@ -1,3 +1,9 @@
+# denseFLMM v0.1.4
+
+## changes
+
+- change of maintenance
+
 # denseFLMM v0.1.3
 
 ## changes
